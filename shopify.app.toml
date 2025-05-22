@@ -1,0 +1,36 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "f6aab045b66474df12689b77f60c84d5"
+name = "my-autocomplete-address"
+handle = "my-autocomplete-address"
+application_url = "https://mu-bottle-rubber-street.trycloudflare.com"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-04"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_customers,read_customers, write_customers,read_checkouts"
+
+[auth]
+redirect_urls = [
+  "https://mu-bottle-rubber-street.trycloudflare.com/auth/callback",
+  "https://mu-bottle-rubber-street.trycloudflare.com/auth/shopify/callback",
+  "https://mu-bottle-rubber-street.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false

@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@localhost:3306/map"
+}
+
+model session {
+  id              String    @id @db.VarChar(255)
+  shop            String    @db.VarChar(255)
+  state           String    @db.VarChar(255)
+  isOnline        Boolean   @default(false)
+  scope           String?   @db.VarChar(255)
+  expires         DateTime? @db.DateTime(0)
+  accessToken     String    @db.VarChar(255)
+  userId          BigInt?
+  firstName       String?   @db.VarChar(255)
+  lastName        String?   @db.VarChar(255)
+  email           String?   @db.VarChar(255)
+  accountOwner    Boolean   @default(false)
+  locale          String?   @db.VarChar(255)
+  collaborator    Boolean?  @default(false)
+  emailVerified   Boolean?  @default(false)
+  googleMapApiKey String?   @db.VarChar(255)
+}
