@@ -1,5 +1,5 @@
 import { extension } from "@shopify/ui-extensions/checkout";
-const BASE_URL = "https://boxing-urge-dreams-goes.trycloudflare.com";
+const BASE_URL = "https://hello-word-a7us.onrender.com";
 export default extension(
   "purchase.address-autocomplete.suggest",
   async ({ signal, target, sessionToken }) => {
