@@ -19,6 +19,8 @@ type = "ui_extension"
 module = "./src/suggest.js"
 target = "purchase.address-autocomplete.suggest"
 
+
+
 [extensions.capabilities]
 network_access = true
 block_progress = true

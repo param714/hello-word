@@ -26,3 +26,13 @@ export async function getUserApiKey(session) {
 
   return userSession?.googleMapApiKey || null;
 }
+export async function getUserApiKeyByShop(shop) {
+  if (!shop) return null;
+
+  const userSession = await db.session.findFirst({
+    where: { shop },
+    select: { googleMapApiKey: true },
+  });
+
+  return userSession?.googleMapApiKey || null;
+}

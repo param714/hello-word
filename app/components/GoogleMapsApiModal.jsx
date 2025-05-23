@@ -7,16 +7,19 @@ import {
 } from "@shopify/polaris";
 import { useState, useEffect } from "react";
 import { useFetcher } from "@remix-run/react";
-
+import { validateGoogleMapsApiKey } from '../utils/validateGoogleMapsApiKey';
 export default function GoogleMapsApiModal({ modalActive,toggleModal,apiKeyVal }) {
-  const [apiKey, setApiKey] = useState(apiKeyVal);
+  const [apiKey, setApiKey] = useState('');
   const [errors, setErrors] = useState({});
   const [toastActive, setToastActive] = useState(false);
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting";
-useEffect(()=>{
-  setApiKey(apiKeyVal)
-},[apiKeyVal])
+useEffect(() => {
+  if (modalActive) {
+    setApiKey(apiKeyVal || '');
+     setErrors({});
+  }
+}, [modalActive, apiKeyVal]);
   const toggleToast = () => setToastActive((active) => !active);
   const toastMarkup = toastActive ? (
     <Toast content="Google Maps API key saved successfully." onDismiss={toggleToast} />
@@ -39,12 +42,17 @@ useEffect(()=>{
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      document.getElementById("add-update-key")?.requestSubmit();
-    }
-  };
+  const handleSubmit = async () => {
+  const isFormValid = validateForm();
+  if (!isFormValid) return;
 
+  const isApiKeyValid = await validateGoogleMapsApiKey(apiKey);
+  if (!isApiKeyValid) {
+    setErrors({ apiKey: "Invalid Google Maps API key" });
+    return;
+  }
+  document.getElementById("add-update-key")?.requestSubmit();
+};
   return (
     <Frame>
       <Modal
